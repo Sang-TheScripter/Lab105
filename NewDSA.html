@@ -1,0 +1,1025 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSI105 - DSA Final Project</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="NewDSA.css" />
+  </head>
+  <body>
+    <nav>
+      <h2>CSI105 - Lab</h2>
+      <ul>
+        <li onclick="navTo('p1')" id="m1" class="active">
+          1. Manage Data (List)
+        </li>
+        <li onclick="navTo('p2')" id="m2">2. Stack & Queue</li>
+        <li onclick="navTo('p3')" id="m3">3. Convert Expression</li>
+        <li onclick="navTo('p4')" id="m4">4. Sorting Algorithms</li>
+        <li onclick="navTo('p5')" id="m5">5. Expression Tree</li>
+        <li onclick="navTo('p6')" id="m6">6. Binary Search Tree</li>
+      </ul>
+    </nav>
+
+    <main>
+      <div id="p1" class="page active">
+        <h1>1. Manage Data (Linked List)</h1>
+        <div class="card">
+          <div style="display: flex; gap: 5px; margin-bottom: 15px">
+            <input
+              type="text"
+              id="llName"
+              placeholder="ชื่อ List"
+              style="margin-bottom: 0"
+            />
+            <button onclick="createList()" class="btn-success">
+              Create List
+            </button>
+            <button onclick="deleteList()" class="btn-danger">
+              Delete List
+            </button>
+          </div>
+          <div style="margin-bottom: 15px">
+            <label style="font-weight: bold">เลือก List: </label>
+            <select id="llSelect" onchange="switchList()"></select>
+          </div>
+          <hr style="border-top: 1px dashed #ccc; margin: 15px 0" />
+          <div>
+            <input type="text" id="llVal" placeholder="ค่าข้อมูล (Value)" />
+            <input type="number" id="llIdx" placeholder="ตำแหน่ง (Index)" />
+          </div>
+          <div>
+            <button onclick="ll('push')">Push</button>
+            <button onclick="ll('pop')">Pop</button>
+            <button onclick="ll('unshift')">Unshift</button>
+            <button onclick="ll('shift')">Shift</button>
+            <button onclick="ll('insert')">Insert</button>
+            <button onclick="ll('remove')">Remove</button>
+            <button onclick="ll('set')">Set</button>
+            <button onclick="ll('get')">Get</button>
+            <button onclick="ll('clear')" class="btn-danger">Clear</button>
+          </div>
+          <div id="llDisplay" class="node-container"></div>
+          <div class="log-box">
+            <span class="label-badge">สถานะ:</span
+            ><span id="llOutput">กรุณาสร้าง List</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="p2" class="page">
+        <h1>2. Stack & Queue</h1>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+          <div class="card">
+            <h3>Stack (LIFO)</h3>
+            <input type="text" id="stVal" placeholder="ค่าข้อมูล" />
+            <br />
+            <button onclick="sqOp('st', 'push')">Push</button>
+            <button onclick="sqOp('st', 'pop')">Pop</button>
+            <button onclick="sqOp('st', 'top')" class="btn-warn">Top</button>
+            <button onclick="sqOp('st', 'clear')" class="btn-danger">
+              Clear
+            </button>
+            <div class="log-box">
+              <span class="label-badge">Stack Log:</span
+              ><span id="stLog">TOP -> NULL</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Queue (FIFO)</h3>
+            <input type="text" id="qVal" placeholder="ค่าข้อมูล" />
+            <br />
+            <button onclick="sqOp('q', 'en')">Enqueue</button>
+            <button onclick="sqOp('q', 'de')">Dequeue</button>
+            <button onclick="sqOp('q', 'front')" class="btn-warn">Front</button>
+            <button onclick="sqOp('q', 'clear')" class="btn-danger">
+              Clear
+            </button>
+            <div class="log-box">
+              <span class="label-badge">Queue Log:</span
+              ><span id="qLog">FRONT -> NULL <- REAR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="p3" class="page">
+        <h1>3. Convert Expression</h1>
+        <div class="card">
+          <label style="font-weight: bold">กรอกสมการคณิตศาสตร์ (Infix):</label>
+          <div style="display: flex; gap: 10px; margin-top: 10px">
+            <input
+              type="text"
+              id="expInput"
+              placeholder="เช่น A+(B-C^D)*E/F"
+              style="flex: 1"
+            />
+            <button onclick="convertExp()" class="btn-success">Convert</button>
+          </div>
+          <div class="log-box">
+            <span class="label-badge">Operand :</span><span id="resOpd">-</span>
+          </div>
+          <div class="log-box">
+            <span class="label-badge">Operator :</span
+            ><span id="resOpt">-</span>
+          </div>
+          <div class="log-box" style="border-left-color: var(--success)">
+            <span class="label-badge">Prefix:</span><span id="resPre">-</span>
+          </div>
+          <div class="log-box" style="border-left-color: var(--warn)">
+            <span class="label-badge">Postfix:</span><span id="resPost">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="p4" class="page">
+        <h1>4. Sorting Algorithms</h1>
+        <div class="card">
+          <div
+            style="
+              background: #f8f9fa;
+              padding: 15px;
+              border-radius: 8px;
+              margin-bottom: 15px;
+              border: 1px solid #ddd;
+            "
+          >
+            <strong style="color: var(--primary)">กรอกข้อมูล :</strong><br />
+            <input
+              type="text"
+              id="sortName"
+              placeholder="ชื่อนักเรียน"
+              style="margin-top: 10px"
+            />
+            <input
+              type="number"
+              id="sortScore"
+              placeholder="คะแนนสอบ"
+              max="100"
+            />
+            <button onclick="addManualSortData()" class="btn-success">
+              เพิ่มข้อมูล
+            </button>
+            <button onclick="initSortTable()" class="btn-purple">
+              สุ่มข้อมูล
+            </button>
+            <button onclick="resetSortTable()" class="btn-warn">
+              คืนค่ากราฟเริ่มต้น
+            </button>
+            <button onclick="clearSortTable()" class="btn-danger">Clear</button>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 5px">
+            <button onclick="runSort('bubble')">Bubble Sort</button>
+            <button onclick="runSort('insertion')">Insertion Sort</button>
+            <button onclick="runSort('selection')">Selection Sort</button>
+            <button onclick="runSort('merge')" style="background: #9b59b6">
+              Merge Sort
+            </button>
+            <button onclick="runSort('quick')" style="background: #e67e22">
+              Quick Sort
+            </button>
+            <button onclick="runSort('heap')" style="background: #34495e">
+              Heap Sort
+            </button>
+          </div>
+          <div id="sort-canvas"></div>
+          <div class="log-box" style="margin-top: 10px">
+            <span class="label-badge">เวลาประมวลผล:</span
+            ><span id="sortRes">- ms</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="p5" class="page">
+        <h1>5. Expression Tree (Animated)</h1>
+        <div class="card">
+          <label style="font-weight: bold">กรอกสมการ Infix:</label>
+          <div style="display: flex; gap: 10px; margin-top: 10px">
+            <input
+              type="text"
+              id="treeExpIn"
+              placeholder="เช่น A+(B*C)"
+              style="width: 250px"
+            />
+            <button onclick="buildExpTree()" class="btn-purple">
+              สร้างกราฟต้นไม้
+            </button>
+          </div>
+
+          <div id="expTreeCanvas" class="tree-container tree"></div>
+
+          <div
+            style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px"
+          >
+            <div class="log-box">
+              <span class="label-badge">Inorder (Infix):</span
+              ><span id="treeIn">-</span>
+            </div>
+            <div class="log-box">
+              <span class="label-badge">Preorder (Prefix):</span
+              ><span id="treePre">-</span>
+            </div>
+            <div class="log-box">
+              <span class="label-badge">Postorder (Postfix):</span
+              ><span id="treePost">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="p6" class="page">
+        <h1>6. Binary Search Tree (BST)</h1>
+        <div class="card">
+          <input type="number" id="bstInput" placeholder="ใส่ตัวเลข" />
+          <button onclick="runBST('insert')" class="btn-success">
+            Insert Node
+          </button>
+          <button onclick="runBST('search')" class="btn-warn">
+            Search Node
+          </button>
+          <button onclick="runBST('clear')" class="btn-danger">
+            Clear Tree
+          </button>
+
+          <div class="log-box" style="margin-bottom: 15px">
+            <span class="label-badge">สถานะการทำงาน:</span
+            ><span id="bstStatus">พร้อมใช้งาน</span>
+          </div>
+
+          <div
+            id="bstCanvas"
+            class="tree-container tree"
+            style="min-height: 250px"
+          ></div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // ==========================================
+      // Core Structures (Nodes & Pointers)
+      // ==========================================
+      class Node {
+        constructor(val) {
+          this.val = val;
+          this.next = null;
+        }
+      }
+      class TreeNode {
+        constructor(val) {
+          this.val = val;
+          this.left = null;
+          this.right = null;
+          this.id = Math.random().toString(36).substr(2, 9);
+        }
+      }
+
+      class Stack {
+        constructor() {
+          this.top = null;
+        }
+        push(val) {
+          let n = new Node(val);
+          n.next = this.top;
+          this.top = n;
+        }
+        pop() {
+          if (!this.top) return null;
+          let v = this.top.val;
+          this.top = this.top.next;
+          return v;
+        }
+        peek() {
+          return this.top ? this.top.val : null;
+        }
+        isEmpty() {
+          return this.top === null;
+        }
+        clear() {
+          this.top = null;
+        }
+        toArray() {
+          let arr = [];
+          let c = this.top;
+          while (c) {
+            arr.push(c.val);
+            c = c.next;
+          }
+          return arr;
+        }
+      }
+
+      class Queue {
+        constructor() {
+          this.first = null;
+          this.last = null;
+        }
+        enqueue(val) {
+          let n = new Node(val);
+          if (!this.first) {
+            this.first = this.last = n;
+          } else {
+            this.last.next = n;
+            this.last = n;
+          }
+        }
+        dequeue() {
+          if (!this.first) return null;
+          let v = this.first.val;
+          this.first = this.first.next;
+          if (!this.first) this.last = null;
+          return v;
+        }
+        front() {
+          return this.first ? this.first.val : null;
+        }
+        clear() {
+          this.first = this.last = null;
+        }
+        toArray() {
+          let arr = [];
+          let c = this.first;
+          while (c) {
+            arr.push(c.val);
+            c = c.next;
+          }
+          return arr;
+        }
+      }
+
+      const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
+      // ==========================================
+      // Navigation Logic
+      // ==========================================
+      function navTo(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll("nav li")
+          .forEach((l) => l.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        document.getElementById("m" + id[1]).classList.add("active");
+      }
+
+      // ==========================================
+      // 1. Manage Data & Manage List (Linked List)
+      // ==========================================
+      class LinkedList {
+        constructor() {
+          this.head = null;
+          this.length = 0;
+        }
+        push(val) {
+          let n = new Node(val);
+          if (!this.head) this.head = n;
+          else {
+            let c = this.head;
+            while (c.next) c = c.next;
+            c.next = n;
+          }
+          this.length++;
+        }
+        pop() {
+          if (!this.head) return;
+          if (!this.head.next) this.head = null;
+          else {
+            let c = this.head;
+            while (c.next.next) c = c.next;
+            c.next = null;
+          }
+          this.length--;
+        }
+        unshift(val) {
+          let n = new Node(val);
+          n.next = this.head;
+          this.head = n;
+          this.length++;
+        }
+        shift() {
+          if (!this.head) return;
+          this.head = this.head.next;
+          this.length--;
+        }
+        get(idx) {
+          if (idx < 0 || idx >= this.length) return null;
+          let c = this.head;
+          for (let i = 0; i < idx; i++) c = c.next;
+          return c;
+        }
+        set(idx, val) {
+          let n = this.get(idx);
+          if (n) {
+            n.val = val;
+            return true;
+          }
+          return false;
+        }
+        insert(idx, val) {
+          if (idx === 0) return this.unshift(val);
+          let p = this.get(idx - 1);
+          if (p) {
+            let n = new Node(val);
+            n.next = p.next;
+            p.next = n;
+            this.length++;
+          }
+        }
+        remove(idx) {
+          if (idx === 0) return this.shift();
+          let p = this.get(idx - 1);
+          if (p && p.next) {
+            p.next = p.next.next;
+            this.length--;
+          }
+        }
+        clear() {
+          this.head = null;
+          this.length = 0;
+        }
+        toArray() {
+          let arr = [];
+          let c = this.head;
+          while (c) {
+            arr.push(c.val);
+            c = c.next;
+          }
+          return arr;
+        }
+        fromArray(arr) {
+          this.clear();
+          arr.forEach((v) => this.push(v));
+        }
+      }
+
+      let lists = {};
+      let currentLL = null;
+      function saveDB() {
+        let d = {};
+        for (let k in lists) d[k] = lists[k].toArray();
+        localStorage.setItem("csi105_db", JSON.stringify(d));
+      }
+      function loadDB() {
+        let d = JSON.parse(localStorage.getItem("csi105_db") || "{}");
+        let sel = document.getElementById("llSelect");
+        sel.innerHTML = "";
+        for (let k in d) {
+          lists[k] = new LinkedList();
+          lists[k].fromArray(d[k]);
+          sel.innerHTML += `<option value="${k}">${k}</option>`;
+        }
+        if (sel.options.length > 0) {
+          currentLL = lists[sel.value];
+          drawLL();
+        }
+      }
+      function createList() {
+        let n = document.getElementById("llName").value.trim();
+        if (!n) return alert("กรุณากรอกชื่อ List");
+        if (!lists[n]) {
+          lists[n] = new LinkedList();
+          document.getElementById("llSelect").innerHTML +=
+            `<option value="${n}">${n}</option>`;
+        }
+        document.getElementById("llSelect").value = n;
+        currentLL = lists[n];
+        document.getElementById("llName").value = "";
+        saveDB();
+        drawLL();
+      }
+      function deleteList() {
+        let sel = document.getElementById("llSelect");
+        let n = sel.value;
+        if (!n) return;
+        delete lists[n];
+        sel.remove(sel.selectedIndex);
+        currentLL = sel.options.length ? lists[sel.value] : null;
+        saveDB();
+        drawLL();
+      }
+      function switchList() {
+        currentLL = lists[document.getElementById("llSelect").value];
+        drawLL();
+      }
+      function drawLL() {
+        let h = "";
+        if (currentLL)
+          currentLL
+            .toArray()
+            .forEach((v) => (h += `<div class="node-box">${v}</div>`));
+        document.getElementById("llDisplay").innerHTML = h;
+        document.getElementById("llOutput").innerText = currentLL
+          ? `List ปัจจุบันมี ${currentLL.length} ข้อมูล`
+          : "กรุณาสร้าง List";
+      }
+      function ll(act) {
+        if (!currentLL) return alert("กรุณาสร้างหรือเลือก List ก่อน");
+        let v = document.getElementById("llVal").value;
+        let i = parseInt(document.getElementById("llIdx").value);
+        if (act === "push" && v) currentLL.push(v);
+        if (act === "pop") currentLL.pop();
+        if (act === "unshift" && v) currentLL.unshift(v);
+        if (act === "shift") currentLL.shift();
+        if (act === "insert" && !isNaN(i) && v) currentLL.insert(i, v);
+        if (act === "remove" && !isNaN(i)) currentLL.remove(i);
+        if (act === "set" && !isNaN(i) && v) currentLL.set(i, v);
+        if (act === "clear") currentLL.clear();
+        if (act === "get" && !isNaN(i)) {
+          let n = currentLL.get(i);
+          alert(n ? `ค่าที่ Index ${i} คือ: ${n.val}` : "ไม่พบข้อมูล");
+        }
+        drawLL();
+        saveDB();
+        document.getElementById("llVal").value = "";
+        document.getElementById("llIdx").value = "";
+      }
+      loadDB();
+
+      // ==========================================
+      // 2. Stack & Queue
+      // ==========================================
+      let mySt = new Stack();
+      let myQ = new Queue();
+      function sqOp(type, act) {
+        if (type === "st") {
+          let v = document.getElementById("stVal").value;
+          if (act === "push" && v) mySt.push(v);
+          if (act === "pop") mySt.pop();
+          if (act === "clear") mySt.clear();
+          if (act === "top")
+            alert(mySt.peek() !== null ? `Top: ${mySt.peek()}` : "Stack Empty");
+          document.getElementById("stLog").innerText =
+            "TOP -> [ " + mySt.toArray().join(" | ") + " ] -> NULL";
+          document.getElementById("stVal").value = "";
+        } else {
+          let v = document.getElementById("qVal").value;
+          if (act === "en" && v) myQ.enqueue(v);
+          if (act === "de") myQ.dequeue();
+          if (act === "clear") myQ.clear();
+          if (act === "front")
+            alert(
+              myQ.front() !== null ? `Front: ${myQ.front()}` : "Queue Empty",
+            );
+          document.getElementById("qLog").innerText =
+            "FRONT -> [ " + myQ.toArray().join(" , ") + " ] <- REAR";
+          document.getElementById("qVal").value = "";
+        }
+      }
+
+      // ==========================================
+      // 3. Convert Expression
+      // ==========================================
+      function convertExp() {
+        let str = document.getElementById("expInput").value.replace(/\s+/g, "");
+        let tokens = str.match(/[a-zA-Z0-9]+|[\+\-\*\/\^\(\)]/g);
+        if (!tokens) return;
+
+        document.getElementById("resOpd").innerText = tokens
+          .filter((t) => /[a-zA-Z0-9]/.test(t))
+          .join(" ");
+        document.getElementById("resOpt").innerText = tokens
+          .filter((t) => /[\+\-\*\/\^\(\)]/.test(t))
+          .join(" ");
+
+        let prec = { "+": 1, "-": 1, "*": 2, "/": 2, "^": 3 };
+        let assoc = { "+": "L", "-": "L", "*": "L", "/": "L", "^": "R" };
+
+        // Postfix
+        let s1 = new Stack();
+        let post = [];
+        for (let t of tokens) {
+          if (/[a-zA-Z0-9]/.test(t)) post.push(t);
+          else if (t === "(") s1.push(t);
+          else if (t === ")") {
+            while (!s1.isEmpty() && s1.peek() !== "(") post.push(s1.pop());
+            s1.pop();
+          } else {
+            while (
+              !s1.isEmpty() &&
+              s1.peek() !== "(" &&
+              ((assoc[t] === "L" && prec[s1.peek()] >= prec[t]) ||
+                (assoc[t] === "R" && prec[s1.peek()] > prec[t]))
+            )
+              post.push(s1.pop());
+            s1.push(t);
+          }
+        }
+        while (!s1.isEmpty()) post.push(s1.pop());
+        document.getElementById("resPost").innerText = post.join(" ");
+
+        // Prefix
+        let s2 = new Stack();
+        let pre = [];
+        let rev = [...tokens]
+          .reverse()
+          .map((t) => (t === "(" ? ")" : t === ")" ? "(" : t));
+        for (let t of rev) {
+          if (/[a-zA-Z0-9]/.test(t)) pre.push(t);
+          else if (t === "(") s2.push(t);
+          else if (t === ")") {
+            while (!s2.isEmpty() && s2.peek() !== "(") pre.push(s2.pop());
+            s2.pop();
+          } else {
+            while (
+              !s2.isEmpty() &&
+              s2.peek() !== "(" &&
+              ((assoc[t] === "L" && prec[s2.peek()] > prec[t]) ||
+                (assoc[t] === "R" && prec[s2.peek()] >= prec[t]))
+            )
+              pre.push(s2.pop());
+            s2.push(t);
+          }
+        }
+        while (!s2.isEmpty()) pre.push(s2.pop());
+        document.getElementById("resPre").innerText = pre.reverse().join(" ");
+      }
+
+      // ==========================================
+      // 4. Sorting (Table + 6 Algorithms + Reset)
+      // ==========================================
+      let sortData = [];
+      let originalSortData = [];
+      const namesDB = [
+        "Somchai",
+        "Somsri",
+        "Manee",
+        "Piti",
+        "Chujai",
+        "Weera",
+        "Petch",
+        "Nadech",
+        "Yaya",
+        "Mario",
+      ];
+
+      function clearSortTable() {
+        sortData = [];
+        originalSortData = [];
+        drawTable();
+        document.getElementById("sortRes").innerText = "- ms";
+      }
+      function addManualSortData() {
+        let n = document.getElementById("sortName").value || "Unknown";
+        let s = parseInt(document.getElementById("sortScore").value);
+        if (isNaN(s)) return alert("กรุณาใส่คะแนนเป็นตัวเลข");
+        sortData.push({ name: n, score: s });
+        originalSortData = JSON.parse(JSON.stringify(sortData));
+        drawTable();
+        document.getElementById("sortName").value = "";
+        document.getElementById("sortScore").value = "";
+      }
+      function initSortTable() {
+        sortData = [];
+        for (let i = 0; i < 8; i++)
+          sortData.push({
+            name: namesDB[Math.floor(Math.random() * namesDB.length)],
+            score: Math.floor(Math.random() * 100) + 1,
+          });
+        originalSortData = JSON.parse(JSON.stringify(sortData));
+        drawTable();
+        document.getElementById("sortRes").innerText = "- ms";
+      }
+      function resetSortTable() {
+        if (originalSortData.length === 0)
+          return alert("ไม่มีข้อมูลเริ่มต้นให้คืนค่า");
+        sortData = JSON.parse(JSON.stringify(originalSortData));
+        drawTable();
+        document.getElementById("sortRes").innerText = "คืนค่ากราฟเริ่มต้นแล้ว";
+      }
+      function drawTable(active = []) {
+        let h = "";
+        sortData.forEach((item, i) => {
+          let color = active.includes(i) ? "var(--danger)" : "var(--accent)";
+          h += `<div class="bar-row">
+                        <div class="bar-label">${item.name}</div>
+                        <div style="flex: 1;"><div class="bar" style="width:${item.score}%; background:${color}">${item.score} คะแนน</div></div>
+                      </div>`;
+        });
+        document.getElementById("sort-canvas").innerHTML = h;
+      }
+
+      async function runSort(type) {
+        if (sortData.length === 0) {
+          initSortTable();
+        } else {
+          sortData = JSON.parse(JSON.stringify(originalSortData));
+          drawTable();
+          await delay(300);
+        }
+
+        let t0 = performance.now();
+        let n = sortData.length;
+
+        if (type === "bubble") {
+          for (let i = 0; i < n; i++)
+            for (let j = 0; j < n - i - 1; j++)
+              if (sortData[j].score > sortData[j + 1].score) {
+                [sortData[j], sortData[j + 1]] = [sortData[j + 1], sortData[j]];
+                drawTable([j, j + 1]);
+                await delay(100);
+              }
+        } else if (type === "insertion") {
+          for (let i = 1; i < n; i++) {
+            let k = sortData[i];
+            let j = i - 1;
+            while (j >= 0 && sortData[j].score > k.score) {
+              sortData[j + 1] = sortData[j];
+              drawTable([j, j + 1]);
+              await delay(100);
+              j--;
+            }
+            sortData[j + 1] = k;
+            drawTable([j + 1]);
+          }
+        } else if (type === "selection") {
+          for (let i = 0; i < n; i++) {
+            let min = i;
+            for (let j = i + 1; j < n; j++)
+              if (sortData[j].score < sortData[min].score) min = j;
+            if (min !== i) {
+              [sortData[i], sortData[min]] = [sortData[min], sortData[i]];
+              drawTable([i, min]);
+              await delay(150);
+            }
+          }
+        } else if (type === "merge") {
+          async function mSort(l, r) {
+            if (l >= r) return;
+            let m = Math.floor((l + r) / 2);
+            await mSort(l, m);
+            await mSort(m + 1, r);
+            let L = sortData.slice(l, m + 1),
+              R = sortData.slice(m + 1, r + 1);
+            let i = 0,
+              j = 0,
+              k = l;
+            while (i < L.length && j < R.length) {
+              if (L[i].score <= R[j].score) sortData[k++] = L[i++];
+              else sortData[k++] = R[j++];
+              drawTable([k - 1]);
+              await delay(100);
+            }
+            while (i < L.length) {
+              sortData[k++] = L[i++];
+              drawTable([k - 1]);
+              await delay(100);
+            }
+            while (j < R.length) {
+              sortData[k++] = R[j++];
+              drawTable([k - 1]);
+              await delay(100);
+            }
+          }
+          await mSort(0, n - 1);
+        } else if (type === "quick") {
+          async function qSort(l, h) {
+            if (l < h) {
+              let pi = await partition(l, h);
+              await qSort(l, pi - 1);
+              await qSort(pi + 1, h);
+            }
+          }
+          async function partition(l, h) {
+            let piv = sortData[h].score;
+            let i = l - 1;
+            for (let j = l; j < h; j++)
+              if (sortData[j].score < piv) {
+                i++;
+                [sortData[i], sortData[j]] = [sortData[j], sortData[i]];
+                drawTable([i, j, h]);
+                await delay(100);
+              }
+            [sortData[i + 1], sortData[h]] = [sortData[h], sortData[i + 1]];
+            drawTable([i + 1, h]);
+            await delay(100);
+            return i + 1;
+          }
+          await qSort(0, n - 1);
+        } else if (type === "heap") {
+          async function heapify(sz, i) {
+            let largest = i,
+              l = 2 * i + 1,
+              r = 2 * i + 2;
+            if (l < sz && sortData[l].score > sortData[largest].score)
+              largest = l;
+            if (r < sz && sortData[r].score > sortData[largest].score)
+              largest = r;
+            if (largest !== i) {
+              [sortData[i], sortData[largest]] = [
+                sortData[largest],
+                sortData[i],
+              ];
+              drawTable([i, largest]);
+              await delay(100);
+              await heapify(sz, largest);
+            }
+          }
+          for (let i = Math.floor(n / 2) - 1; i >= 0; i--) await heapify(n, i);
+          for (let i = n - 1; i > 0; i--) {
+            [sortData[0], sortData[i]] = [sortData[i], sortData[0]];
+            drawTable([0, i]);
+            await delay(100);
+            await heapify(i, 0);
+          }
+        }
+        let t1 = performance.now();
+        drawTable();
+        document.getElementById("sortRes").innerText =
+          `${(t1 - t0).toFixed(2)} ms`;
+      }
+
+      // ==========================================
+      // 5. Expression Tree
+      // ==========================================
+      function buildHTMLTree(node, isHidden = false) {
+        if (!node)
+          return `<li><span class="node-ui" style="visibility:hidden;">X</span></li>`;
+        let c = isHidden ? "node-ui hidden" : "node-ui";
+        let html = `<li><span class="${c}" id="node-${node.id}">${node.val}</span>`;
+        if (node.left || node.right) {
+          html += `<ul>${node.left ? buildHTMLTree(node.left, isHidden) : buildHTMLTree(null)}${node.right ? buildHTMLTree(node.right, isHidden) : buildHTMLTree(null)}</ul>`;
+        }
+        html += `</li>`;
+        return html;
+      }
+
+      async function buildExpTree() {
+        let str = document
+          .getElementById("treeExpIn")
+          .value.replace(/\s+/g, "");
+        let tokens = str.match(/[a-zA-Z0-9]+|[\+\-\*\/\^\(\)]/g);
+        if (!tokens) return;
+
+        let s = new Stack();
+        let post = [];
+        let prec = { "+": 1, "-": 1, "*": 2, "/": 2, "^": 3 };
+        let assoc = { "+": "L", "-": "L", "*": "L", "/": "L", "^": "R" };
+        for (let t of tokens) {
+          if (/[a-zA-Z0-9]/.test(t)) post.push(t);
+          else if (t === "(") s.push(t);
+          else if (t === ")") {
+            while (!s.isEmpty() && s.peek() !== "(") post.push(s.pop());
+            s.pop();
+          } else {
+            while (
+              !s.isEmpty() &&
+              s.peek() !== "(" &&
+              ((assoc[t] === "L" && prec[s.peek()] >= prec[t]) ||
+                (assoc[t] === "R" && prec[s.peek()] > prec[t]))
+            )
+              post.push(s.pop());
+            s.push(t);
+          }
+        }
+        while (!s.isEmpty()) post.push(s.pop());
+
+        let ts = new Stack();
+        for (let t of post) {
+          let n = new TreeNode(t);
+          if (!/[\+\-\*\/\^]/.test(t)) ts.push(n);
+          else {
+            n.right = ts.pop();
+            n.left = ts.pop();
+            ts.push(n);
+          }
+        }
+        let root = ts.pop();
+
+        document.getElementById("expTreeCanvas").innerHTML =
+          `<ul>${buildHTMLTree(root, true)}</ul>`;
+
+        // Level-Order Traversal
+        let queue = [root];
+        let topDownNodes = [];
+        while (queue.length > 0) {
+          let curr = queue.shift();
+          if (curr) {
+            topDownNodes.push(curr);
+            if (curr.left) queue.push(curr.left);
+            if (curr.right) queue.push(curr.right);
+          }
+        }
+
+        for (let node of topDownNodes) {
+          let el = document.getElementById(`node-${node.id}`);
+          if (el) {
+            el.classList.remove("hidden");
+            el.classList.add("highlight");
+            await delay(250);
+            el.classList.remove("highlight");
+          }
+        }
+
+        let inR = [],
+          preR = [],
+          postR = [];
+        function trav(n) {
+          if (n) {
+            preR.push(n.val);
+            trav(n.left);
+            inR.push(n.val);
+            trav(n.right);
+            postR.push(n.val);
+          }
+        }
+        trav(root);
+        document.getElementById("treeIn").innerText = inR.join(" ");
+        document.getElementById("treePre").innerText = preR.join(" ");
+        document.getElementById("treePost").innerText = postR.join(" ");
+      }
+
+      // ==========================================
+      // 6. Binary Search Tree (BST)
+      // ==========================================
+      class BST {
+        constructor() {
+          this.root = null;
+        }
+        async insert(val) {
+          let n = new TreeNode(val);
+          if (!this.root) {
+            this.root = n;
+            return true;
+          }
+          let curr = this.root;
+          while (true) {
+            let el = document.getElementById(`node-${curr.id}`);
+            if (el) {
+              el.classList.add("highlight");
+              await delay(400);
+              el.classList.remove("highlight");
+            }
+            if (val === curr.val) return false;
+            if (val < curr.val) {
+              if (!curr.left) {
+                curr.left = n;
+                return true;
+              }
+              curr = curr.left;
+            } else {
+              if (!curr.right) {
+                curr.right = n;
+                return true;
+              }
+              curr = curr.right;
+            }
+          }
+        }
+        async search(val) {
+          let curr = this.root;
+          while (curr) {
+            let el = document.getElementById(`node-${curr.id}`);
+            if (el) {
+              el.classList.add("highlight");
+              await delay(400);
+              el.classList.remove("highlight");
+            }
+            if (val === curr.val) {
+              if (el) el.classList.add("found");
+              return true;
+            }
+            if (val < curr.val) curr = curr.left;
+            else curr = curr.right;
+          }
+          return false;
+        }
+      }
+      let myBST = new BST();
+      async function runBST(act) {
+        let v = parseInt(document.getElementById("bstInput").value);
+        let status = document.getElementById("bstStatus");
+        document
+          .querySelectorAll(".node-ui")
+          .forEach((el) => el.classList.remove("found"));
+
+        if (act === "clear") {
+          myBST = new BST();
+          document.getElementById("bstCanvas").innerHTML = "";
+          status.innerText = "เคลียร์ข้อมูลสำเร็จ";
+          return;
+        }
+        if (isNaN(v)) return alert("กรุณาใส่ตัวเลขด้วยครับ");
+
+        if (act === "insert") {
+          status.innerText = `กำลังหาจุดแทรก Node ${v}...`;
+          let res = await myBST.insert(v);
+          document.getElementById("bstCanvas").innerHTML =
+            `<ul>${buildHTMLTree(myBST.root)}</ul>`;
+          status.innerText = res
+            ? `เพิ่ม ${v} สำเร็จ`
+            : `ค่า ${v} มีอยู่แล้วใน Tree`;
+        } else if (act === "search") {
+          status.innerText = `กำลังค้นหา Node ${v}...`;
+          let found = await myBST.search(v);
+          status.innerText = found ? `เจอค่า ${v} ใน Tree!` : `ไม่พบค่า ${v}`;
+        }
+        document.getElementById("bstInput").value = "";
+      }
+    </script>
+  </body>
+</html>
